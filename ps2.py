@@ -93,7 +93,7 @@ def get_guessed_word(secret_word, letters_guessed):
     return secret_word_after_guessed
 
 
-def get_available_letters(letters_guessed):
+def get_available_letters(letters_guessed=[]):
     '''
     letters_guessed: list (of letters), which letters have been guessed so far
     returns: string (of letters), comprised of letters that represents which letters have not
@@ -234,6 +234,58 @@ if __name__ == "__main__":
     #hangman_with_hints(secret_word)
 
 
+print('Welcome to the game Hangman!')
+#game_word = choose_word(wordlist)
+secret_word = "tact"
+print("I am thinking of a word that is "+str(len(secret_word))+" letters long.")
 
-letters_guessed = ['e', 'i', 'k', 'p', 'r', 's']
-print(get_available_letters(letters_guessed) )
+letters_guessed = []
+count_guesses = 6
+warnings = 3
+available_letter = get_available_letters()
+
+letter_unique = ()
+for l in list(secret_word):
+    if l not in letter_unique:
+        letter_unique = letter_unique + (l,)
+
+print("You have "+str(warnings)+" warnings left.")
+
+
+while count_guesses > 0:
+    print("-------------")
+    print("You have "+str(count_guesses)+" guesses left.")
+    print("Available letters: "+str(available_letter))
+    letter = str.lower(raw_input("Please guess a letter:"))
+    if letter not in get_available_letters():
+        warnings =- 1
+        if warnings>=0:
+            print("Oops! That is not a valid letter. You have"+str(warnings)+" warnings left:"+get_guessed_word(secret_word, letters_guessed))
+        else:
+            print("Oops! That is not a valid letter. You have no warnings left so you lose one guess:"+get_guessed_word(secret_word, letters_guessed))
+            count_guesses -= 1
+    elif letter in letters_guessed:
+        warnings =- 1
+        if warnings>=0:
+            print("Oops! You've already guessed that letter. You have "+str(warnings)+" warnings left:"+get_guessed_word(secret_word, letters_guessed))
+        else:
+            print("Oops! You've already guessed that letter. You have no warnings left so you lose one guess:"+get_guessed_word(secret_word, letters_guessed))
+            count_guesses -= 1        
+    else:
+        letters_guessed.append(letter)
+        if is_word_guessed(secret_word,letters_guessed):
+            print("Good guess: "+get_guessed_word(secret_word, letters_guessed))
+            if get_guessed_word(secret_word, letters_guessed) == secret_word:
+                break
+        else:
+            print("Oops! That letter is not in my word:"+get_guessed_word(secret_word, letters_guessed))
+            if letter in ['a', 'e', 'i' , 'o', 'u']:
+                count_guesses -= 2
+            else:
+                count_guesses -= 1
+
+total_score = count_guesses*len(letter_unique)
+
+if get_guessed_word(secret_word, letters_guessed) == secret_word:
+    print("Congratulations, you won!")
+    print("Your total score for this game is: "+str(total_score))

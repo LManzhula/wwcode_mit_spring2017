@@ -151,14 +151,14 @@ def hangman(secret_word):
         print("Available letters: "+str(available_letter))
         letter = str.lower(input("Please guess a letter:"))
         if letter not in get_available_letters():
-            warnings =- 1
+            warnings -= 1
             if warnings>=0:
                 print("Oops! That is not a valid letter. You have"+str(warnings)+" warnings left:"+get_guessed_word(secret_word, letters_guessed))
             else:
                 print("Oops! That is not a valid letter. You have no warnings left so you lose one guess:"+get_guessed_word(secret_word, letters_guessed))
                 count_guesses -= 1
         elif letter in letters_guessed:
-            warnings =- 1
+            warnings -= 1
             if warnings>=0:
                 print("Oops! You've already guessed that letter. You have "+str(warnings)+" warnings left:"+get_guessed_word(secret_word, letters_guessed))
             else:
@@ -315,14 +315,14 @@ def hangman_with_hints(secret_word):
             show_possible_matches(get_guessed_word(secret_word, letters_guessed))
             count_guesses -= 1
         elif letter not in get_available_letters():
-            warnings =- 1
+            warnings -= 1
             if warnings>=0:
                 print("Oops! That is not a valid letter. You have"+str(warnings)+" warnings left:"+get_guessed_word(secret_word, letters_guessed))
             else:
                 print("Oops! That is not a valid letter. You have no warnings left so you lose one guess:"+get_guessed_word(secret_word, letters_guessed))
                 count_guesses -= 1
         elif letter in letters_guessed:
-            warnings =- 1
+            warnings -= 1
             if warnings>=0:
                 print("Oops! You've already guessed that letter. You have "+str(warnings)+" warnings left:"+get_guessed_word(secret_word, letters_guessed))
             else:
